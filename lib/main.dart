@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:habit_tracker_app/backend/backend.dart';
 import 'package:habit_tracker_app/main_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => Backend(),
+    child: const MaterialApp(
+      home: MainScreen(),
+    ),
+  ));
 }
 
 class MyApp extends StatelessWidget {

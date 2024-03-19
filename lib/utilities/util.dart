@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:percent_indicator/percent_indicator.dart';
 
 class HabitTile extends StatelessWidget {
@@ -6,8 +7,9 @@ class HabitTile extends StatelessWidget {
   final VoidCallback onTap;
   final VoidCallback settingTapped;
   final int goalTime;
-  final int spendTime;
   final bool hasHabitStarted;
+  final int spendTime;
+
   const HabitTile({
     super.key,
     required this.habitName,
@@ -34,21 +36,26 @@ class HabitTile extends StatelessWidget {
           children: [
             Row(
               children: [
-                SizedBox(
-                    height: 60,
-                    width: 60,
-                    child: Stack(
-                      children: [
-                        Center(
-                          child: CircularPercentIndicator(
-                            radius: 20,
+                GestureDetector(
+                  onTap: onTap,
+                  child: SizedBox(
+                      height: 60,
+                      width: 60,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: CircularPercentIndicator(
+                              radius: 20,
+                            ),
                           ),
-                        ),
-                        const Center(
-                          child: Icon(Icons.play_arrow),
-                        )
-                      ],
-                    )),
+                          Center(
+                            child: Icon(hasHabitStarted
+                                ? Icons.pause
+                                : Icons.play_arrow),
+                          )
+                        ],
+                      )),
+                ),
                 const SizedBox(
                   width: 20,
                 ),
@@ -65,9 +72,9 @@ class HabitTile extends StatelessWidget {
                     const SizedBox(
                       height: 2,
                     ),
-                    const Text(
-                      '2:00/10 = 20%',
-                      style: TextStyle(
+                    Text(
+                      '$spendTime/$goalTime',
+                      style: const TextStyle(
                         color: Colors.grey,
                       ),
                     )
@@ -75,8 +82,11 @@ class HabitTile extends StatelessWidget {
                 ),
               ],
             ),
-            const Icon(
-              Icons.settings,
+            GestureDetector(
+              onTap: settingTapped,
+              child: const Icon(
+                Icons.settings,
+              ),
             )
           ],
         ),
