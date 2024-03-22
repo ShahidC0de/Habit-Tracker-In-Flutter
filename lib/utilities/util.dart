@@ -19,9 +19,16 @@ class HabitTile extends StatelessWidget {
     required this.hasHabitStarted,
     required this.spendTime,
   });
+  double percentCompleted() {
+    return spendTime / goalTime / 60;
+  }
+
   String formatIntoSeconds(int totalSeconds) {
     String secs = (totalSeconds % 60).toString();
-    String mins = (totalSeconds / 60).toStringAsFixed(0);
+    String mins = (totalSeconds / 60).toStringAsFixed(5);
+    if (secs.length == 1) {
+      secs = '0' + secs;
+    }
     if (mins[1] == '.') {
       mins = mins.substring(0, 1);
     }
@@ -54,6 +61,14 @@ class HabitTile extends StatelessWidget {
                           Center(
                             child: CircularPercentIndicator(
                               radius: 20,
+                              percent: percentCompleted() < 1
+                                  ? percentCompleted()
+                                  : 1,
+                              progressColor: percentCompleted() > 0.5
+                                  ? Colors.orange
+                                  : percentCompleted() > 0.75
+                                      ? Colors.green
+                                      : Colors.red,
                             ),
                           ),
                           Center(
@@ -81,7 +96,12 @@ class HabitTile extends StatelessWidget {
                       height: 2,
                     ),
                     Text(
-                      ' $formatIntoSeconds(spendTime)/$goalTime'.toString(),
+                      formatIntoSeconds(spendTime) +
+                          '/' +
+                          goalTime.toString() +
+                          '=' +
+                          (percentCompleted() * 100).toStringAsFixed(0) +
+                          '%',
                       style: const TextStyle(
                         color: Colors.grey,
                       ),
