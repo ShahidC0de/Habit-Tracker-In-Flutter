@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Backend extends ChangeNotifier {
   List<List<dynamic>> habitsLists = [
     //[ habitName, hasHabitStarted, timespend(sec), timegoal(mins) ]
-    ['Exercise', false, 0, 12],
+    ['Exercise', false, 6, 12],
     ['Read', false, 2, 30],
     ['Meditate', false, 5, 32],
     ['Code', false, 10, 15],

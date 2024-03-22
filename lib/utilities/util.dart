@@ -19,6 +19,14 @@ class HabitTile extends StatelessWidget {
     required this.hasHabitStarted,
     required this.spendTime,
   });
+  String formatIntoSeconds(int totalSeconds) {
+    String secs = (totalSeconds % 60).toString();
+    String mins = (totalSeconds / 60).toStringAsFixed(0);
+    if (mins[1] == '.') {
+      mins = mins.substring(0, 1);
+    }
+    return '$mins:$secs';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,10 +81,12 @@ class HabitTile extends StatelessWidget {
                       height: 2,
                     ),
                     Text(
-                      '$spendTime/$goalTime',
+                      ' $formatIntoSeconds(spendTime)/$goalTime'.toString(),
                       style: const TextStyle(
                         color: Colors.grey,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     )
                   ],
                 ),
